@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function urlToDomain () {
+            return Array.from(document.getElementsByTagName('a'))
+                .map(link => link.href
+                    .replace('http://', '')
+                    .replace('https://', '')
+                    .replace('www.', '')
+                    .split('/')
+                    .shift()
+                    )
+            .reduce((uniqueDomains, domain) => {
+                if (uniqueDomains.includes(domain)) return  uniqueDomains;
+                return [...uniqueDomains, domain];
+            }, []);
+        }
+
+
+
+
+
+        function transformationString(dat) {
+            return dat
+            //делим - разделитель новая строка
+            .split('\n')
+            //фильтруем. line это строка отсекаем пробелы вначале и в конце через trim и проверяем чтобы длина была больше 0. Тем самым избавляемся от пустых строк
+            .filter(line => line.trim().length > 0)
+            //преобразуем строку в объект
+            .map(line =>  {
+                const [fullName, occupation] = line
+                //делим через запятую на fullName, occupation
+                .split(',')
+                //убираем у строк пробелы в начале и в конце
+                .map(str => str.trim())
+                //убираем пустые строки
+                .filter(text => text.length > 0)
+                const [name, surname, midlename] = fullName
+                .split(' ')
+                .filter(text => text.length > 0);
+                return {
+                    surname, name, midlename, occupation
+                };
+            })
+        }
+        console.log(transformationString(data));
+    </script>
+</body>
+</html>
